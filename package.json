@@ -1,0 +1,22 @@
+{
+  "name": "triumbot",
+  "version": "1.0.0",
+  "description": "A Twitch Bot to send messages in chat via an online interface - intended to mitigate the lack of command cooldown for moderators",
+  "main": "triumbot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewxie43/TriumBot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrewxie43/TriumBot/issues"
+  },
+  "homepage": "https://github.com/andrewxie43/TriumBot#readme",
+  "dependencies": {
+    "tmi.js": "^1.8.5"
+  }
+}
