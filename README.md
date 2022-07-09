@@ -7,4 +7,5 @@ run node triumbot.js via terminal in the folder (https://dev.twitch.tv/docs/irc/
 
 ## Installed procedures (dev)
 npm install tmi.js
+npm install axios.js
 
