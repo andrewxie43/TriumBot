@@ -1,9 +1,19 @@
 const tmi = require('tmi.js'); //Package for Twitch
+
+/* For authorization code grant flow - server only, untested/unfinished module
 import {oauthKey, postOauth, getOauth } from "./oauth";
+let oauthKey = getOauth();
+*/
 
-//Client secret in Github encrypted secrets, figure out how to access
+//Implicit Grant Flow - for prototyping without a server
 
-getOauth();
+
+
+//view output
+console.log(authLink.location.hash);
+
+
+/* commented out for oauth testing
 
 
 
@@ -19,7 +29,7 @@ const opts = {
 };
 
 
-/* commented out for oauth testing
+
 
 
 

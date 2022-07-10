@@ -3,11 +3,15 @@
 const axios = require("axios");
 
 
+//REWRITE https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#implicit-grant-flow
+//This is for servers only, so this authentication method will need to be used once we add to AWS
+
+
 export let oauthKey = ''; //insert oauthKey here before running, until server setup
 let refreshKey;
 
 //HTTP GET request to validate token, https://dev.twitch.tv/docs/authentication/validate-tokens
-//Note that implicit grant flow (this) is for client-side/non server apps, authentication method will need to be changed once we add to AWS
+//Client secret in Github encrypted secrets, figure out how to access
 export function getOauth(){
     axios.get('https://id.twitch.tv/oauth2/validate', {
         headers: {
@@ -20,9 +24,10 @@ export function getOauth(){
         })
         .catch(function (error) {
             console.log('Failed to authenticate! Refreshing token...');
+            postOauth(); //check syntax of this
         })
         .then(function () {
-            // always executed
+            return oauthKey
         });
 };
 

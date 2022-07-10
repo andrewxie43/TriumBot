@@ -1,20 +1,29 @@
 <html>
 <body>
+
+<!-- Add a placeholder for the token retrival link -->
+var redirectPage = decodeURIComponent(url);
+
 <!-- Add a placeholder for the Twitch embed -->
 <div id="twitch-embed"></div>
 
-<!-- Load the Twitch embed JavaScript file -->
-<script src="https://embed.twitch.tv/embed/v1.js"></script>
+<!-- Convert to HTML, note that client ID is hardcoded! -->
 
-<!-- Create a Twitch.Embed object that will render within the "twitch-embed" element -->
-<script type="text/javascript">
-    new Twitch.Embed("twitch-embed", {
-        width: 854,
-        height: 480,
-        channel: "roseriie",
-        // Only needed if this page is going to be embedded on other websites
-        parent: ["andrewxie43.github.io"]
-    });
+<script>
+    var clientID = 4uxchhqxd3m9nfzs3kvjo1k4h2dq5z;
+
+    <!-- enable state string after
+    <!-- var stateString = Math.random().toString(16).substr(2, 10);  -->
+    var authLink = 'https://id.twitch.tv/oauth2/authorize' +
+        '?response_type=token' +
+        '&client_id=' + clientID +
+        '&redirect_uri=http://localhost:3000' +
+        '&scope=chat%3Aread+chat&3Aedit' +
+        '&state=' + stateString;
 </script>
+
+<a href=authLink>Connect with Twitch</a>
+
+
 </body>
 </html>
