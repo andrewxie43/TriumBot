@@ -1,51 +1,10 @@
 const tmi = require('tmi.js'); //Package for Twitch
-const axios = require('axios'); //Package for HTTP requests
+import {oauthKey, postOauth, getOauth } from "./oauth";
 
 //Client secret in Github encrypted secrets, figure out how to access
 
+getOauth();
 
-// Verify https enabled
-let https;
-try {
-    https = require('node:https');
-} catch (err) {
-    console.log('https support is disabled!');
-}
-
-
-//NTS: store token in encrypted file? Get it every time it boots? Get it on startup then set a async timer to revalidate?
-
-let oauthKey = ''; //insert oauthKey here before running, until server setup
-let refreshKey;
-
-//HTTP GET request to validate token, https://dev.twitch.tv/docs/authentication/validate-tokens
-axios.get('https://id.twitch.tv/oauth2/validate', {
-    headers: {
-        'Authorization': 'OAuth ' + oauthKey
-    }
-})
-    .then(function (response) {
-        console.log(response);
-        //Get expires_in and set a reauth?
-    })
-    .catch(function (error) {
-        console.log('Failed to authenticate! Refreshing token...');
-    })
-    .then(function () {
-        // always executed
-    });
-
-
-axios.post('https://whatever.com/todos', {
-        todo: 'Buy the milk',
-    })
-    .then(res => {
-        console.log(`statusCode: ${res.status}`);
-        console.log(res);
-    })
-    .catch(error => {
-        console.error(error);
-    });
 
 
 // Define configuration options
@@ -58,13 +17,6 @@ const opts = {
         'dentedcontra'
     ]
 };
-
-//Make function that checks for HTTP Status Code 401 and refreshes tokens then.
-
-
-//How do we check the results from the get function?
-
-//If token does not validate, make HTTP POST request to https://id.twitch.tv/oauth2/token, docs at https://dev.twitch.tv/docs/authentication/refresh-tokens
 
 
 /* commented out for oauth testing
