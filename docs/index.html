@@ -10,11 +10,11 @@ var redirectPage = decodeURIComponent(url);
 <!-- Convert to HTML, note that client ID is hardcoded! -->
 
 <script>
-    var clientID = 4uxchhqxd3m9nfzs3kvjo1k4h2dq5z;
+    let clientID = '4uxchhqxd3m9nfzs3kvjo1k4h2dq5z';
+    let stateString = 'testingstring1'
+    //var stateString = Math.random().toString(16).substr(2, 10);
 
-    <!-- enable state string after
-    <!-- var stateString = Math.random().toString(16).substr(2, 10);  -->
-    var authLink = 'https://id.twitch.tv/oauth2/authorize' +
+    const authLink = 'https://id.twitch.tv/oauth2/authorize' +
         '?response_type=token' +
         '&client_id=' + clientID +
         '&redirect_uri=http://localhost:3000' +
@@ -24,6 +24,7 @@ var redirectPage = decodeURIComponent(url);
 
 <a href=authLink>Connect with Twitch</a>
 
+<script type="text/javascript" src="triumbot.js"></script>
 
 </body>
 </html>

@@ -5,17 +5,13 @@ import {oauthKey, postOauth, getOauth } from "./oauth";
 let oauthKey = getOauth();
 */
 
-//Implicit Grant Flow - for prototyping without a server
+//Implicit Grant Flow used for prototyping without a server, not implemented
 
 
 
-//view output
-console.log(authLink.location.hash);
-
-
-/* commented out for oauth testing
-
-
+//For testing - hardcoded Oauth key, refetch when debugging locally, delete when done!
+//Get key from: https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=4uxchhqxd3m9nfzs3kvjo1k4h2dq5z&redirect_uri=http://localhost:3000&scope=chat%3Aread+chat%3Aedit
+let oauthKey = 'key';
 
 // Define configuration options
 const opts = {
@@ -28,11 +24,6 @@ const opts = {
     ]
 };
 
-
-
-
-
-
 // Create a client with our options
 const client = new tmi.client(opts);
 
@@ -43,28 +34,10 @@ client.on('connected', onConnectedHandler);
 // Connect to Twitch:
 client.connect();
 
-//Called every time a message comes in
-function onMessageHandler (target, context, msg, self) {
-
-    //target is the user that send the message, context returns the info about the user (sample in discord), msg is the content of the message
-
-    if (self) { return; } // Ignore messages from the bot
-
-    // Remove whitespace from chat message
-    const message = msg.trim();
-    console.log(message);
-
-}
-
 // Called every time the bot connects to Twitch chat
 function onConnectedHandler (addr, port) {
     console.log(`* Connected to ${addr}:${port}`);
 }
-
-
-
-
-/* --Sample code below for reference--
 
 // Called every time a message comes in
 function onMessageHandler (target, context, msg, self) {
@@ -72,27 +45,35 @@ function onMessageHandler (target, context, msg, self) {
 
     // Remove whitespace from chat message
     const commandName = msg.trim();
+    const sender = context.username;
 
     // If the command is known, let's execute it
-    if (commandName === '!dice') {
-        const num = rollDice();
-        client.say(target, `You rolled a ${num}`);
+    if (commandName === '!testComm') { //temp hardcoded name, needs a way to detect arguments
+        testComm.say(sender);
         console.log(`* Executed ${commandName} command`);
     } else {
         console.log(`* Unknown command ${commandName}`);
     }
 }
 
-// Function called when the "dice" command is issued
-function rollDice () {
-    const sides = 6;
-    return Math.floor(Math.random() * sides) + 1;
-}
+//Class for chat commands
+class chatCommand {
+    constructor(name, output){
+        this.name = '!' + name;
+        this.output = output
+    }
+
+    say(sender, target = sender) {
+        client.say(target,`@${target}, ${this.output}`);
+    }
+
+};
+
+//Define commands
+let testComm = new chatCommand('testComm', 'Test recieved!');
+
 
 // Called every time the bot connects to Twitch chat
 function onConnectedHandler (addr, port) {
     console.log(`* Connected to ${addr}:${port}`);
-}
-
-
- */
+};
