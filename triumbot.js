@@ -31,8 +31,17 @@ const client = new tmi.client(opts);
 client.on('message', onMessageHandler);
 client.on('connected', onConnectedHandler);
 
+
+//VARIABLE DEFINITION
+//Dictionary to store commands and time, date object to track time
+const d = new Date();
+let sentCommands = {};
+
+const buffer = 5000; //How long duplicate commands are blocked for
+
 // Connect to Twitch:
 client.connect();
+
 
 // Called every time the bot connects to Twitch chat
 function onConnectedHandler (addr, port) {
@@ -47,12 +56,43 @@ function onMessageHandler (target, context, msg, self) {
     const commandName = msg.trim();
     const sender = context.username;
 
+    let isSent = checkCommand(commandName);
+    if (!isSent){
+        console.log(`* ${commandName} command sent recently, blocking...`);
+        return; //Nothing to do if command already sent
+    }
+
     // If the command is known, let's execute it
     if (commandName === '!testComm') { //temp hardcoded name, needs a way to detect arguments
         testComm.say(sender);
         console.log(`* Executed ${commandName} command`);
     } else {
         console.log(`* Unknown command ${commandName}`);
+    }
+}
+
+//Function to check new commands against stored list
+function checkCommand(command) {
+    clearDictionary(); //Clean up dictionary before running
+    let lastSent = sentCommands.command;
+    let currentTime = d.getTime;
+    if (typeof sentCommands.command !== 'undefined'){ //Command has been sent
+        if (lastSent - currentTime  < buffer){
+            return false; //Command already sent within buffer, do not process
+        } else {
+            return true;
+        }
+    } else {
+        sentCommands[command] = d.currentTime; //Command undefined, so put in dictionary
+    }
+}
+
+//Function to clear dictionary of expired commands
+function clearDictionary(){
+    for (key in sentCommands){
+        if (sentCommands.key - d.getTime > buffer){
+            delete sentCommands.key;
+        }
     }
 }
 
